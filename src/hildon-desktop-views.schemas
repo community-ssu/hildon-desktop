@@ -59,7 +59,7 @@
       <applyto>/apps/osso/hildon-desktop/ui_can_rotate</applyto>
       <owner>hildon-desktop</owner>
       <type>bool</type>
-      <default>true</default>
+      <default>false</default>
       <locale name="C">
         <short>Enable rotation from/to portrait mode for Task Launcher and Navigator.</short>
       </locale>
@@ -109,7 +109,7 @@
       <applyto>/apps/osso/hildon-desktop/desktop_orientation_lock</applyto>
       <owner>hildon-desktop</owner>
       <type>bool</type>
-      <default>true</default>
+      <default>false</default>
       <locale name="C">
 	<short>Set to false to unlock desktop portrait mode</short>
       </locale>
