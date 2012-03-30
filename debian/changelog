@@ -1,3 +1,23 @@
+hildon-desktop (1:2.2.142-19) unstable; urgency=low
+
+  * Tasknav: keep aspect ratio and fix clipping for portrait thumbnails.
+  * Remove zoom functionality
+  * transition: don't repaint until the screen is black
+
+ -- Christian Ratzenhofer <christian_ratzenhofer@yahoo.de>  Tue, 13 Mar 2012 16:10:00 +0100
+
+hildon-desktop (1:2.2.142-18) unstable; urgency=low
+
+  * Enable launcher icon editor in both orientations.
+
+ -- Mohammad Abu-Garbeyyeh <mohammad7410@gmail.com>  Mon, 02 Jan 2012 15:14:26 +0200
+
+hildon-desktop (1:2.2.142-17) unstable; urgency=low
+
+  * Rebuilt hildon-desktop with a raised version number.
+
+ -- Mohammad Abu-Garbeyyeh <mohammad7410@gmail.com>  Wed, 30 Nov 2011 16:54:38 +0200
+
 hildon-desktop (1:2.2.142-16.2) unstable; urgency=low
 
   * Set desktop_orientation_lock to false since it breaks dialer ui, ui_can_rotate instead

@@ -928,11 +928,13 @@ hd_home_desktop_key_press (XKeyEvent *xev, void *userdata)
                                        NULL, NULL, NULL);
 	  g_warning("kv=%i   %i %i", keyval, GDK_Left, GDK_Right);
 	  if (keyval==GDK_Left) {
-		  hd_home_view_container_scroll_to_previous (HD_HOME_VIEW_CONTAINER (priv->view_container), 20000);
+      if (!hd_home_view_container_is_scrolling (HD_HOME_VIEW_CONTAINER (priv->view_container)))
+  		  hd_home_view_container_scroll_to_previous (HD_HOME_VIEW_CONTAINER (priv->view_container), 20000);
 		  return ;
 	  }
 	  if (keyval==GDK_Right) {
-		  hd_home_view_container_scroll_to_next (HD_HOME_VIEW_CONTAINER (priv->view_container), -20000);
+      if (!hd_home_view_container_is_scrolling (HD_HOME_VIEW_CONTAINER (priv->view_container)))
+		    hd_home_view_container_scroll_to_next (HD_HOME_VIEW_CONTAINER (priv->view_container), -20000);
 		  return ;
 	  }
 	  
@@ -2844,3 +2846,10 @@ hd_home_is_portrait_wallpaper_enabled (HdHome *home)
 
   return priv->portrait_wallpaper;
 }
+
+gboolean
+hd_home_is_desktop_in_portrait_mode (void)
+{
+	return STATE_IS_PORTRAIT (hd_render_manager_get_state ());
+}
+
