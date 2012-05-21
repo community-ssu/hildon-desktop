@@ -1,8 +1,20 @@
-hildon-desktop (1:2.2.142-20-thumb0) unstable; urgency=low
+hildon-desktop (1:2.2.142-21.1-thumb0) unstable; urgency=low
 
   * Enable thumb compile
 
- -- Ivaylo Dimitrov <freemangordon@abv.bg>  Thu,  10 May 2012 22:29:36 +0300
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Mon,  21 May 2012 16:30:43 +0300
+
+hildon-desktop (1:2.2.142-21.1) unstable; urgency=low
+
+  * Don't dereference null pointer when checking for whitelisted/blacklisted application.
+
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Mon, 21 May 2012 16:06:33 +0300
+
+hildon-desktop (1:2.2.142-21) unstable; urgency=low
+
+  * Remove depracted GConf key.
+
+ -- Tomasz Pieniazek <t.pieniazek@gazeta.pl>  Tue, 10 Apr 2012 20:48:41 +0200
 
 hildon-desktop (1:2.2.142-20) unstable; urgency=low
 
