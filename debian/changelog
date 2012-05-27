@@ -1,3 +1,9 @@
+hildon-desktop (1:2.2.142-21.1-thumb1) unstable; urgency=low
+
+  * Add kernel-feature-errata-430973-workaround as a dependency
+
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Mon,  27 May 2012 11:36:23 +0300
+
 hildon-desktop (1:2.2.142-21.1-thumb0) unstable; urgency=low
 
   * Enable thumb compile
