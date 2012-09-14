@@ -47,6 +47,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <clutter/clutter.h>
 #include <tidy/tidy-finger-scroll.h>
+#include <tidy/tidy-desaturation-group.h>
 
 #include <matchbox/core/mb-wm.h>
 #include <matchbox/comp-mgr/mb-wm-comp-mgr.h>
@@ -182,6 +183,9 @@
   hd_transition_get_int("task_nav", "notifade_in", 250)
 #define NOTIFADE_OUT_DURATION     \
   hd_transition_get_int("task_nav", "notifade_out", 250)
+
+#define THUMB_DESATURATION_ENABLED     \
+  hd_transition_get_int("thp_tweaks", "thumb_desaturation", 0)
 
 /*
  *  These are based on the UX Guidance.
@@ -2423,7 +2427,11 @@ create_thwin (Thumbnail * thumb, ClutterActor * prison)
                          thumb->title, thumb->close, NULL);
 
   /* .thwin */
-  thumb->thwin = clutter_group_new ();
+  if (THUMB_DESATURATION_ENABLED)
+    thumb->thwin = tidy_desaturation_group_new ();
+  else
+    thumb->thwin = clutter_group_new ();
+
   clutter_actor_set_name (thumb->thwin, "thumbnail");
   clutter_actor_set_reactive (thumb->thwin, TRUE);
   clutter_container_add (CLUTTER_CONTAINER (thumb->thwin),
@@ -3020,6 +3028,15 @@ actor_to_client_window (ClutterActor * win, const HdCompMgrClient **hcmgrcp)
   return cmgrc->wm_client->window;
 }
 
+static void
+appthumb_set_desaturation (const Thumbnail * apthumb, gboolean desaturate)
+{
+    if (desaturate)
+        tidy_desaturation_group_desaturate(CLUTTER_ACTOR(apthumb->thwin));
+    else
+        tidy_desaturation_group_undo_desaturate(CLUTTER_ACTOR(apthumb->thwin));
+}
+
 /* Called when a %Thumbnail.thwin is clicked. */
 static gboolean
 appthumb_clicked (Thumbnail * apthumb)
@@ -3068,13 +3085,18 @@ appthumb_close_clicked (const Thumbnail * apthumb)
   if (thumb_has_notification (apthumb))
     g_signal_emit_by_name (Navigator, "notification-closed",
                            apthumb->tnote->hdnote);
-  else
+  else {
+    if (!apthumb_has_dialogs (apthumb) 
+      && THUMB_DESATURATION_ENABLED)
+        appthumb_set_desaturation (apthumb, TRUE);
+
     /* Report a regular click on the thumbnail (and make %HdSwitcher zoom in)
      * if the application has open dialogs. */
     g_signal_emit_by_name (Navigator,
                            apthumb_has_dialogs (apthumb)
                              ? "thumbnail-clicked" : "thumbnail-closed",
                            apthumb->apwin);
+    }
   return TRUE;
 }
 
@@ -3454,6 +3476,10 @@ hd_task_navigator_add_dialog (HdTaskNavigator * self,
     apthumb->dialogs = g_ptr_array_new ();
   g_ptr_array_add (apthumb->dialogs, g_object_ref(dialog));
   clutter_actor_hide (apthumb->close_app_icon);
+
+  /* Undo desaturation for @apthumb->thwin. */
+  if (THUMB_DESATURATION_ENABLED)
+    appthumb_set_desaturation (apthumb, FALSE);
 }
 /* Add/remove windows }}} */
 
