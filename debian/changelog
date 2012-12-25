@@ -1,3 +1,80 @@
+hildon-desktop (1:2.2.146-2+thumb0) unstable; urgency=low
+
+  * Thumb2 compiled
+
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Tue, 25 Dec 2012 17:09:33 +0200
+
+hildon-desktop (1:2.2.146-2) unstable; urgency=low
+
+  * Build-Depends: Increas required verson of libmatchbox2-dev to fix clash with Nokia version
+
+ -- Christian Ratzenhofer <christian_ratzenhofer@yahoo.de>  Sun, 23 Dec 2012 16:53:09 +0100
+
+hildon-desktop (1:2.2.146-1) unstable; urgency=low
+
+  * Fixes: Portrait (dialog) windows handling.
+  * Fixes: i'm [not] gonna create 0x0 frame window and play hide and catch with you, have a good time.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 14 Dec 2012 13:29:00 +0200
+
+hildon-desktop (1:2.2.145-2) unstable; urgency=low
+
+  * Build-Depends: Increase required version of the libmatchbox2-dev.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 13 Dec 2012 19:59:00 +0200
+
+hildon-desktop (1:2.2.145-1) unstable; urgency=low
+
+  * Fixes: BMO #12177: Autorotate disfunction using Catorise.
+  * Fixes: http://talk.maemo.org/showpost.php?p=1298147&postcount=980: QTLockscreen's orientation problem.
+  * Fixes: Do not allow to blacklist a window with PORTRAIT flag.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 30 Nov 2012 18:03:00 +0200
+
+hildon-desktop (1:2.2.144-1) unstable; urgency=low
+
+  * New: Launcher supports loading 80x80 icons (from the Harmattan). They're scaled down to 64x64.
+  * New: Possibility to pass over icon's direct path instead of the icon's name in the desktop file. 
+  * Fixes: BMO #12660: Hildon Menu should scale images when are too big to be displayed.
+  * Fixes: BMO #12576: hildon-desktop crashed after failed SDL png load.
+  * New: Added support for launching apps in portrait mode, when the device lies flat. Works with Hildon/Gtk+ based applications (but not with Qt-based).
+  * New: Launcher editor supports loading 80x80 icons and passing over icon's direct path in the desktop file.
+  * Fixes: Layout of the launcher when coming from the editor in portrait mode.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Thu, 12 Nov 2012 19:01:00 +0200
+
+hildon-desktop (1:2.2.143-1) unstable; urgency=low
+
+  * Formatting fixes.
+  * Improved whitelist and blacklist functionalities.
+  * Added more debug output - PORTRAIT(...).
+  * Removed unused code.
+  * Updated transitions.ini.
+  * Faster, without visual glitches, switching to an application in portrait mode from the task switcher.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 31 Oct 2012 19:57:00 +0200
+
+hildon-desktop (1:2.2.142-24) unstable; urgency=low
+
+  * Fixes: UI glitch - show BTN_BG_LEFT_ATTACHED_PRESSED instead of BTN_BG_LEFT_PRESSED while in the APP state.
+  * Improved whitelist functionality.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 27 Oct 2012 21:04:00 +0200
+
+hildon-desktop (1:2.2.142-23) unstable; urgency=low
+
+  * Small fixes.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Fri, 12 Oct 2012 01:20:01 +0200
+
+hildon-desktop (1:2.2.142-22.1) unstable; urgency=low
+
+  * Fixes BMO #12052: Orientation lock causes incoming call to not display properly
+  * Fixes BMO #12584: hildon-menu gets rotated if orientation locked from portrait
+  * Fixes BMO #12629: blacklisting works not as it should
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Thu, 11 Oct 2012 19:56:33 +0200
+
 hildon-desktop (1:2.2.142-22+thumb0) unstable; urgency=low
 
   * Thumb2 compiled

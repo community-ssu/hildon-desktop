@@ -337,23 +337,38 @@ hd_launcher_update_orientation (gboolean portraited)
       _hd_launcher_update_orientation_cb, GBOOLEAN_TO_POINTER (portraited));
 }
 
+/* hd_launcher_show:
+ *
+ * When the is_top_page is TRUE, the active_page private variable is set to top_page.
+ * Otherwise it keeps the old value.
+ *
+ * Fixes BMO #12177: Autorotate disfunction using Catorise.
+ */
 void
-hd_launcher_show (void)
+hd_launcher_show (gboolean is_top_page)
 {
   ClutterActor *self = CLUTTER_ACTOR (hd_launcher_get ());
   HdLauncherPrivate *priv = HD_LAUNCHER_GET_PRIVATE (self);
 
-  /* Make sure we hide all pages when we start,
-   * to ensure that we can't get into any bad state */
-  if (priv->pages)
-    g_datalist_foreach (&priv->pages, _hd_launcher_hide_page, NULL);
+  if (is_top_page)
+    {
+      /* Make sure we hide all pages when we start,
+       * to ensure that we can't get into any bad state */
+      if (priv->pages)
+        g_datalist_foreach (&priv->pages, _hd_launcher_hide_page, NULL);
 
-  ClutterActor *top_page = g_datalist_get_data (&priv->pages,
-                                                HD_LAUNCHER_ITEM_TOP_CATEGORY);
-  if (!top_page)
-    return;
+      ClutterActor *top_page = g_datalist_get_data (&priv->pages,
+                                                    HD_LAUNCHER_ITEM_TOP_CATEGORY);
+      if (!top_page)
+        return;
 
-  priv->active_page = top_page;
+      priv->active_page = top_page;
+    }
+  else
+    {
+      if (!priv->active_page)
+        return;
+    }
 
   if (priv->editor_done)
     {
@@ -539,6 +554,17 @@ _hd_launcher_editor_destroyed (GtkWidget  *widget,
 
   priv->editor_done = FALSE;
   priv->is_editor_in_landscape = FALSE;
+
+  /* Reset the launcher's layout. */
+  if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
+    {
+      /* The launcher's grid is in landscape mode when coming
+       * from the editor. Reset the portraited variable and update
+       * the layout. */
+
+      priv->portraited = FALSE;
+      hd_launcher_update_orientation (TRUE);
+    }
 
   if (priv->editor)
     {

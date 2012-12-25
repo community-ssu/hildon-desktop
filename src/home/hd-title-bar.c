@@ -762,7 +762,7 @@ hd_title_bar_set_full_width(HdTitleBar *bar, gboolean full_size)
                                 clutter_actor_get_width(priv->buttons[BTN_SEPARATOR_LEFT]));
           else
             clutter_actor_set_x(priv->buttons[BTN_SEPARATOR_LEFT],
-                                hd_title_bar_get_button_width(bar) -
+                                hd_title_bar_get_button_width(bar) - 
                                 clutter_actor_get_width(priv->buttons[BTN_SEPARATOR_LEFT]));
         }
       else

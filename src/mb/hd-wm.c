@@ -370,7 +370,10 @@ hd_wm_activate_zoomed_client (MBWindowManager *wm,
     MB_WINDOW_MANAGER_CLASS(MB_WM_OBJECT_GET_PARENT_CLASS(MB_WM_OBJECT(wm)));
   gboolean ret = wm_class->client_activate (wm, c);
 
-  hd_render_manager_set_state (HDRM_STATE_APP);
+  if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
+    hd_render_manager_set_state (HDRM_STATE_APP_PORTRAIT);  
+  else
+    hd_render_manager_set_state (HDRM_STATE_APP);
 
   hd_render_manager_stop_transition ();
   return ret;
@@ -426,6 +429,9 @@ hd_wm_client_activate (MBWindowManager * wm,
            * APP state, because it makes decisions based on the topmost
            * application on the stack. */
           ret = wm_class->client_activate (wm, c);
+
+          /* Remove hd_comp_mgr_client_supports_portrait(c) for launching Qt-based apps 
+           * in portrait mode, when the device lies flat. */
           if (STATE_IS_PORTRAIT (state) && hd_comp_mgr_client_supports_portrait(c))
             hd_render_manager_set_state (HDRM_STATE_APP_PORTRAIT);
           else

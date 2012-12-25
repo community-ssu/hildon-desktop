@@ -2200,8 +2200,16 @@ hd_app_mgr_mce_activate_accel_if_needed (gboolean update_portraitness)
       if ((reply = dbus_connection_send_with_reply_and_block (
                                           conn, msg, -1, NULL)) != NULL)
         {
-          priv->portrait = _hd_app_mgr_dbus_check_value (reply,
-                                              MCE_ORIENTATION_PORTRAIT);
+          if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()) && 
+                _hd_app_mgr_dbus_check_value (reply, MCE_ORIENTATION_UNKNOWN))
+            {
+              priv->portrait = TRUE;
+            }
+          else
+            {
+              priv->portrait = _hd_app_mgr_dbus_check_value (reply,
+                                                  MCE_ORIENTATION_PORTRAIT);
+            }
           dbus_message_unref (reply);
         }
       else
@@ -2263,7 +2271,7 @@ hd_app_mgr_gconf_value_changed (GConfClient *client,
        * LAUNCHER_PORTRAIT.
        * Under any other case just update the portraitness */
       if (!priv->slide_closed &&
-	  STATE_ONE_OF(hd_render_manager_get_state () ,HDRM_STATE_LAUNCHER_PORTRAIT | HDRM_STATE_TASK_NAV_PORTRAIT))
+        STATE_ONE_OF(hd_render_manager_get_state (), HDRM_STATE_LAUNCHER_PORTRAIT | HDRM_STATE_TASK_NAV_PORTRAIT))
         {
           /* manually setting the HDAppMgr is a bit of kludge, since it's
            * supposed to reflect the accellerometer status, but it's needed or
@@ -2274,7 +2282,7 @@ hd_app_mgr_gconf_value_changed (GConfClient *client,
           hd_render_manager_set_state (hd_render_manager_get_state () == HDRM_STATE_LAUNCHER_PORTRAIT?HDRM_STATE_LAUNCHER:HDRM_STATE_TASK_NAV);
           priv->portrait = portrait;
         }
-      else if (priv->slide_closed && priv->portrait &&
+      else if (priv->slide_closed && priv->portrait && priv->ui_can_rotate &&
         STATE_ONE_OF(hd_render_manager_get_state () , HDRM_STATE_LAUNCHER | HDRM_STATE_TASK_NAV))
           hd_render_manager_set_state (hd_render_manager_get_state () == HDRM_STATE_LAUNCHER?HDRM_STATE_LAUNCHER_PORTRAIT:HDRM_STATE_TASK_NAV_PORTRAIT);
       else
