@@ -1,3 +1,31 @@
+hildon-desktop (1:2.2.149-1) unstable; urgency=low
+
+  * New HdOrientationLock class. Provides possibility to lock a window in portrait mode.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sun, 13 Jan 2013 13:36:00 +0200
+
+hildon-desktop (1:2.2.148-1) unstable; urgency=low
+
+  * Another try to improve hd_comp_mgr_may_be_portrait.
+  * Loading screen fixes.
+  * Update the pip flags when entering the launcher.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 02 Jan 2013 22:24:00 +0200
+
+hildon-desktop (1:2.2.147-1) unstable; urgency=low
+
+  * Improvements related to the new Qt's rotation mechanism.
+  * Update window's thumb (task nav) on client portrait property changed.
+  * Task navigator fixes (crashes, black background, etc.).
+  * Many fixes related to the rotation mechanism (e.g. properly displayed black loading screens).
+  * Reduced number of state changes (for example, when launching an application from portrait launcher).
+  * HdRenderManager: code cleanup.
+  * Hide status area when transitioning from HDRM_STATE_LAUNCHER to portrait STATE_SHOW_STATUS_AREA.
+  * Fixes: Bugs reported by hxka.
+  * Fixes: BMO #12629: blacklisting works not as it should.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Sat, 02 Jan 2013 15:25:00 +0200
+
 hildon-desktop (1:2.2.146-2+thumb0) unstable; urgency=low
 
   * Thumb2 compiled
