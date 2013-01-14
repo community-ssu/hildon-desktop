@@ -1,3 +1,9 @@
+hildon-desktop (1:2.2.149-1+thumb0) unstable; urgency=low
+
+  * Thumb2 compiled
+
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Mon, 14 Jan 2013 16:20:54 +0200
+
 hildon-desktop (1:2.2.149-1) unstable; urgency=low
 
   * New HdOrientationLock class. Provides possibility to lock a window in portrait mode.
