@@ -2075,8 +2075,7 @@ hd_comp_mgr_map_notify (MBWMCompMgr *mgr, MBWindowManagerClient *c)
       if (STATE_IS_LOADING(hd_render_manager_get_state ()))
         {
           /* make sure to hide the loading screen and go to a sane state */
-          hd_launcher_stop_loading_transition ();
-          hd_render_manager_set_loading (NULL);
+          hd_launcher_window_created ();
         }
       /* Move to HDRM_STATE_HOME even if we don't have a loading screen,
        * otherwise we hide the launcher and go to a broken state. */
@@ -3034,8 +3033,6 @@ hd_comp_mgr_effect (MBWMCompMgr                *mgr,
            * starting screen if we had one */
 
           /* make sure to hide the loading screen and go to a sane state */
-          hd_launcher_stop_loading_transition ();
-          hd_render_manager_set_loading (NULL);
           hd_launcher_window_created();
           app->map_effect_before = TRUE;
         }
@@ -3444,14 +3441,9 @@ hd_comp_mgr_should_be_portrait (HdCompMgr *hmgr)
       if (gconf_client_get_bool (priv->gconf_client, GCONF_KEY_DESKTOP_ORIENTATION_LOCK, NULL))
         return FALSE;
 
-      /* Check if we are in portrait desktop edit mode and block screen orientation 
+      /* Check if we are in portrait desktop edit mode and lock screen orientation
        * if it's true */
-      gboolean is_edit_portrait = STATE_ONE_OF (hd_render_manager_get_state (),
-                                                 HDRM_STATE_HOME_EDIT_PORTRAIT |
-                                                 HDRM_STATE_HOME_EDIT_PORTRAIT
-                                               );
-
-      if (hd_home_is_portrait_capable () && is_edit_portrait)
+      if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
         return TRUE;
       else
         return FALSE;
@@ -3484,7 +3476,12 @@ hd_comp_mgr_can_be_portrait (HdCompMgr *hmgr)
     }
   else if (STATE_IS_EDIT_MODE (hd_render_manager_get_state ()))
     {
-      return !hd_app_mgr_slide_is_open ();
+      /* Check if we are in portrait desktop edit mode and lock screen orientation
+       * if it's true */
+      if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
+        return TRUE;
+      else
+        return FALSE;
     }
   else
     {

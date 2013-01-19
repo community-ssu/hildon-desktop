@@ -370,7 +370,7 @@ hd_wm_activate_zoomed_client (MBWindowManager *wm,
     MB_WINDOW_MANAGER_CLASS(MB_WM_OBJECT_GET_PARENT_CLASS(MB_WM_OBJECT(wm)));
   gboolean ret = wm_class->client_activate (wm, c);
 
-  if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
+  if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()) || hd_comp_mgr_client_requests_portrait (c))
     hd_render_manager_set_state (HDRM_STATE_APP_PORTRAIT);
   else
     hd_render_manager_set_state (HDRM_STATE_APP);
@@ -392,12 +392,13 @@ hd_wm_client_activate (MBWindowManager * wm,
   if (c == wm->desktop)
     {
       ret = wm_class->client_activate (wm, c);
-      if (!STATE_NEED_DESKTOP(hd_render_manager_get_state () )){
-				if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
-					hd_render_manager_set_state (HDRM_STATE_HOME_PORTRAIT);
-				else
-        	hd_render_manager_set_state (HDRM_STATE_HOME);
-			}
+      if (!STATE_NEED_DESKTOP (hd_render_manager_get_state () ))
+        {
+          if (STATE_IS_PORTRAIT (hd_render_manager_get_state ()))
+            hd_render_manager_set_state (HDRM_STATE_HOME_PORTRAIT);
+          else
+            hd_render_manager_set_state (HDRM_STATE_HOME);
+        }
     }
   else if (HD_IS_APP (c))
     {

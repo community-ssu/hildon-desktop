@@ -299,6 +299,9 @@ _hd_launcher_update_orientation_cb (GQuark key_id,
 
   g_assert (HD_IS_LAUNCHER_PAGE (page));
 
+  /* Scrolling animation delays screen rotation. */
+  hd_launcher_page_stop_scrolling (page);
+
   grid = HD_LAUNCHER_GRID (hd_launcher_page_get_grid (page));
   /* actual layout update for the grid, reordering and resizing tiles */
   hd_launcher_grid_set_portrait (grid, portraited);
@@ -312,6 +315,9 @@ _hd_launcher_update_orientation_cb (GQuark key_id,
   else
     clutter_actor_set_size (scroller, HD_LAUNCHER_PAGE_WIDTH,
         HD_LAUNCHER_PAGE_HEIGHT);
+
+  /* Update the 'empty label' position. */
+  hd_launcher_page_update_emptylabel (page, portraited);
 }
 
 /* hd_launcher_update_orientation:
@@ -656,13 +662,15 @@ hd_launcher_populate_tree_starting (HdLauncherTree *tree, gpointer data)
 {
   HdLauncher *launcher = HD_LAUNCHER (data);
   HdLauncherPrivate *priv = HD_LAUNCHER_GET_PRIVATE (launcher);
+
   if (STATE_IS_LAUNCHER (hd_render_manager_get_state ()))
     {
-      if(priv->portraited)
-	      hd_render_manager_set_state (HDRM_STATE_HOME_PORTRAIT);
-			else
-				hd_render_manager_set_state (HDRM_STATE_HOME);
+      if (priv->portraited)
+        hd_render_manager_set_state (HDRM_STATE_HOME_PORTRAIT);
+      else
+        hd_render_manager_set_state (HDRM_STATE_HOME);
     }
+
   priv->active_page = NULL;
 
   if (priv->current_traversal)
@@ -841,10 +849,10 @@ hd_launcher_populate_tree_finished (HdLauncherTree *tree, gpointer data)
    * the screen until the user opens the power menu */
   if (STATE_IS_LAUNCHER (hd_render_manager_get_state ()))
     {
-      if(priv->portraited)
-	      hd_render_manager_set_state (HDRM_STATE_HOME_PORTRAIT);
-			else
-				hd_render_manager_set_state (HDRM_STATE_HOME);
+      if (priv->portraited)
+        hd_render_manager_set_state (HDRM_STATE_HOME_PORTRAIT);
+      else
+        hd_render_manager_set_state (HDRM_STATE_HOME);
     }
 
   /* First we traverse the list and create all the categories,
@@ -1156,6 +1164,7 @@ hd_launcher_transition_is_playing(void)
 void hd_launcher_window_created(void)
 {
   hd_launcher_stop_loading_transition();
+  hd_render_manager_set_loading (NULL);
 }
 
 static void
@@ -1266,15 +1275,21 @@ hd_launcher_key_pressed (HdLauncher *self,
   return TRUE;
 }
 
-void 
-hd_launcher_activate(int p) {
-	HdLauncherPrivate *priv = HD_LAUNCHER_GET_PRIVATE (hd_launcher_get ());
-	if (hd_render_manager_get_state () != HDRM_STATE_LAUNCHER) return;
-	if(p==-1) {
-		hd_launcher_back_button_clicked();
-		return;
-	}
-	hd_launcher_page_activate(priv->active_page, p);
+void
+hd_launcher_activate (int p)
+{
+  HdLauncherPrivate *priv = HD_LAUNCHER_GET_PRIVATE (hd_launcher_get ());
+
+  if (hd_render_manager_get_state () != HDRM_STATE_LAUNCHER)
+    return;
+
+  if (p == -1)
+    {
+      hd_launcher_back_button_clicked();
+      return;
+    }
+
+  hd_launcher_page_activate(priv->active_page, p);
 }
 
 gboolean
