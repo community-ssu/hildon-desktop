@@ -1,15 +1,32 @@
+hildon-desktop (1:2.2.153-1+thumb0) unstable; urgency=low
+
+  * Thumb2 compiled
+
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Sat, 13 Jul 2013 11:01:56 +0300
+
+hildon-desktop (1:2.2.152.2-1) unstable; urgency=low
+
+  * Fixed: Thumbnails rotation.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Thu, 27 Jun 2013 17:49:00 +0200
+
 hildon-desktop (1:2.2.152-1+thumb0) unstable; urgency=low
 
   * Thumb2 compiled
 
  -- Ivaylo Dimitrov <freemangordon@abv.bg>  Sun, 07 Apr 2013 18:53:21 +0300
 
-hildon-desktop (1:2.2.152~1) unstable; urgency=low
+hildon-desktop (1:2.2.152.1-1) unstable; urgency=low
 
-  * [UNRELEASED]
+  * New: Add applications osso-backup, ossofilemanager and osso_notes to whitelist.
+
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Thu, 25 Apr 2013 21:43:00 +0200
+
+hildon-desktop (1:2.2.152-1) unstable; urgency=low
+
   * Fixed: The Phone app thumbnail is being rotated before the desktop is rotated.
 
- -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Fri, 15 Mar 2013 20:21:00 +0200
+ -- Tomasz Pieniążek <t.pieniazek@gazeta.pl>  Thu, 25 Apr 2013 21:38:00 +0200
 
 hildon-desktop (1:2.2.151-1) unstable; urgency=low
 
