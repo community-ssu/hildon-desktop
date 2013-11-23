@@ -1,3 +1,9 @@
+hildon-desktop (1:2.2.153-2+thumb0) unstable; urgency=low
+
+  * Thumb2 compiled
+
+ -- Ivaylo Dimitrov <freemangordon@abv.bg>  Sat, 23 Nov 2013 14:09:13 +0200
+
 hildon-desktop (1:2.2.153-2) unstable; urgency=low
 
   * Do not dereference NULL pointer - fixes a crash
